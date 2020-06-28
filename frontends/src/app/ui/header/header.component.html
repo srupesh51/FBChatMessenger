@@ -1,0 +1,13 @@
+<nav class="navbar navbar-dark bg-dark mb-5">
+  <a class="navbar-brand" href="/">FBChatMessenger</a>
+  <div class="navbar-expand mr-auto">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="/signup" *ngIf='!canAccess()'>Signup</a>
+      <a class="nav-item nav-link" href="/login" *ngIf='!canAccess()'>Login</a>
+      <a class="nav-item nav-link" href="/login" *ngIf='canAccess()'
+      (click)="logout()">Logout</a>
+      <a class="nav-item nav-link" href="/sender" *ngIf='canAccess()'
+      (click)="sendMessage()">Send Message</a>
+    </div>
+  </div>
+</nav>
