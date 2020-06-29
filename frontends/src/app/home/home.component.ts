@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as io from 'socket.io-client';
 import * as moment from 'moment';
 import { first } from 'rxjs/operators';
 import { MessageService } from '../services/message.service';
+import { SocketioService } from '../services/socketio.service';
 import {environment} from './../../environments/environment';
 @Component({
   selector: 'app-home',
@@ -16,8 +16,9 @@ export class HomeComponent implements OnInit {
   constructor(
   private route: ActivatedRoute,
   private messageService: MessageService,
-  private router: Router) {
-    this.socket = io(environment.SOCKET_ENDPOINT);
+  private router: Router,
+  private socketService: SocketioService) {
+    this.socket = socketService.getSocketConnection();
   }
 
   ngOnInit(): void {

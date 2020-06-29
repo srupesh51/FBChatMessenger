@@ -79,7 +79,11 @@ exports.getUser = (req,res,next) => {
     if(userInfo !== undefined) {
       res.status(201).json({
             message: 'User Data has been fetched!!!',
-            result: userInfo.user_id
+            result: {
+              user_id: userInfo.user_id,
+              name: userInfo.name,
+              email: userInfo.email
+            }
         });
      } else {
        res.status(500).json({

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as io from 'socket.io-client';
 import { first } from 'rxjs/operators';
 import { MessageService } from '../services/message.service';
 import { UserService } from '../services/user.service';
+import { SocketioService } from '../services/socketio.service';
 import {environment} from './../../environments/environment';
 @Component({
   selector: 'app-sender',
@@ -18,8 +18,9 @@ export class SenderComponent implements OnInit {
   constructor(
   private formBuilder: FormBuilder,
   private userService: UserService,
-  private messageService: MessageService) {
-    this.socket = io(environment.SOCKET_ENDPOINT);
+  private messageService: MessageService,
+  private socketService: SocketioService) {
+    this.socket = socketService.getSocketConnection();
   }
   get f() { return this.messageForm.controls; }
   ngOnInit(): void {
@@ -44,10 +45,10 @@ export class SenderComponent implements OnInit {
         data => {
           if(data) {
             this.socket.emit('MSG_SENT', {
-              user_id: data.result,
+              user_id: data.result.user_id,
               message_text: this.f.message_text.value
             });
-            this.messageService.sendMessage(data.result, this.f.message_text.value)
+            this.messageService.sendMessage(data.result.user_id, this.f.message_text.value)
             .pipe(first())
             .subscribe(
               data => {

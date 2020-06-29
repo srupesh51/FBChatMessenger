@@ -10,6 +10,7 @@ import { UiModule } from './ui/ui.module';
 import { AlertService } from './services/alert.service';
 import { UserService } from './services/user.service';
 import { MessageService } from './services/message.service';
+import { SocketioService } from './services/socketio.service';
 import { AuthenticationService } from './services/authentication.service';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
@@ -37,7 +38,8 @@ import { SenderComponent } from './sender/sender.component';
     AlertService,
     AuthGuard,
     AuthenticationService,
-    MessageService
+    MessageService,
+    SocketioService
   ],
   bootstrap: [AppComponent]
 })
