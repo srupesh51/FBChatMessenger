@@ -1,7 +1,14 @@
 <div class="form-group">
+  <h1> List of Messages </h1>
   <ul>
       <li *ngFor="let message of messages">
           {{message.message_text}} {{message.date}}
+      </li>
+  </ul>
+  <h1> List of Online Users </h1>
+  <ul>
+      <li *ngFor="let user of users">
+          {{user.name}}
       </li>
   </ul>
 </div>

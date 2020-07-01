@@ -39,6 +39,7 @@ app.use('/api/users', userRoutes);
 http.listen(PORT, () => {
     console.log("Server is running on Port: " + PORT);
 });
+let users = [];
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
@@ -49,6 +50,26 @@ io.on('connection', (socket) => {
   });
   socket.on('MSG_SENT', (msgObject) => {
     io.emit('MSG_RECV', msgObject);
+  });
+  socket.on('USER_CONNECTED', (user) => {
+    let flag = false;
+    if(users !== undefined && users.length > 0) {
+      const userFilter = users.filter((currentUser) => {
+            return user.user_id === currentUser.user_id;
+        });
+      flag = userFilter !== undefined && userFilter.length > 0;
+    }
+    if(!flag) {
+      users.push(user);
+    }
+    io.emit('CONNECTED_LIST', users);
+  });
+  socket.on('LOGOUT', (userId) => {
+    const userFilter = users.filter((currentUser) => {
+          return userId !== currentUser.user_id;
+      });
+      users = userFilter;
+      io.emit('LOGOUT_DONE', users);
   });
 });
 module.exports = app;

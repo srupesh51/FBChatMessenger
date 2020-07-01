@@ -15,6 +15,7 @@ export class AuthenticationService {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', user.data.token);
                     localStorage.setItem('userId', user.data.user_id);
+                    localStorage.setItem('userEmail', user.data.email);
                 }
 
                 return user;
@@ -25,5 +26,6 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         localStorage.removeItem('userId');
+        localStorage.removeItem('userEmail');
     }
 }

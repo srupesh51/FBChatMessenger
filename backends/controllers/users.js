@@ -24,7 +24,7 @@ exports.login = (req,res,next) => {
                      data: {
                          token: token,
                          user_id: userInfo.user_id,
-                         expiresIn: 7200
+                         email: userInfo.email
                      },
                      message: 'User Login Successfull!'
                 });

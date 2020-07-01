@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SocketioService } from './../../services/socketio.service';
 import { AuthenticationService } from './../../services/authentication.service';
 @Component({
   selector: 'app-header',
@@ -7,9 +8,12 @@ import { AuthenticationService } from './../../services/authentication.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  socket;
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router) {
+    private router: Router,
+    private socketService: SocketioService) {
+      this.socket = socketService.getSocketConnection();
   }
 
   ngOnInit(): void {
@@ -21,6 +25,7 @@ export class HeaderComponent implements OnInit {
     return false;
   }
   logout() {
+    this.socket.emit('LOGOUT', parseInt(localStorage.getItem('userId')));
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
