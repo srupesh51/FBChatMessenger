@@ -13,7 +13,7 @@ export class UserService {
     }
 
     getUser(email: string) {
-        return this.http.post<any>(BACKEND_API_URL + '/', {email: email});
+        return this.http.get<any>(BACKEND_API_URL + '/' + email);
     }
 
     register(user: User) {

@@ -14,6 +14,6 @@ export class MessageService {
     }
 
     getMessages() {
-        return this.http.post<any>(BACKEND_API_URL + '/', {user_id: localStorage.getItem('userId')});
+        return this.http.get<any>(BACKEND_API_URL + '/' + localStorage.getItem('userId'));
     }
 }

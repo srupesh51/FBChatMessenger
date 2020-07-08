@@ -8,6 +8,8 @@
       (click)="logout()">Logout</a>
       <a class="nav-item nav-link" href="/sender" *ngIf='canAccess()'
       (click)="sendMessage()">Send Message</a>
+      <a class="nav-item nav-link" href="/create-post" *ngIf='canAccess()'
+      (click)="createPost()">Create Post</a>
     </div>
   </div>
 </nav>

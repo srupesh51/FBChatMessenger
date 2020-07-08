@@ -18,6 +18,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SenderComponent } from './sender/sender.component';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SenderComponent } from './sender/sender.component';
     SignupComponent,
     LoginComponent,
     HomeComponent,
-    SenderComponent
+    SenderComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,

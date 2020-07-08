@@ -75,7 +75,7 @@ exports.signUp = (req,res,next) => {
 }
 
 exports.getUser = (req,res,next) => {
-  User.findOne({email: req.body.email}).then((userInfo) => {
+  User.findOne({email: req.params.id}).then((userInfo) => {
     if(userInfo !== undefined) {
       res.status(201).json({
             message: 'User Data has been fetched!!!',

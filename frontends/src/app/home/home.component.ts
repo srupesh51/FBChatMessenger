@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { first } from 'rxjs/operators';
 import { MessageService } from '../services/message.service';
+import { PostService } from '../services/post.service';
 import { UserService } from '../services/user.service';
 import { SocketioService } from '../services/socketio.service';
 import {environment} from './../../environments/environment';
@@ -14,17 +15,51 @@ import {environment} from './../../environments/environment';
 export class HomeComponent implements OnInit {
   socket;
   messages;
-  users = [];
+  posts;
+  users;
   constructor(
   private route: ActivatedRoute,
   private messageService: MessageService,
+  private postService: PostService,
   private router: Router,
   private socketService: SocketioService,
   private userService: UserService) {
     this.socket = socketService.getSocketConnection();
   }
-
+  doesMessagesExist() {
+    if(this.messages !== undefined && this.messages.length > 0) {
+      return true;
+    }
+    return false;
+  }
+  doesUsersExist() {
+    if(this.users !== undefined && this.users.length > 0) {
+      return true;
+    }
+    return false;
+  }
+  doesPostsExist() {
+    if(this.posts !== undefined && this.posts.length > 0) {
+      return true;
+    }
+    return false;
+  }
   ngOnInit(): void {
+    this.postService.getPosts()
+    .pipe(first())
+    .subscribe(
+        data => {
+            this.posts = data.postData;
+            if(this.posts !== undefined && this.posts.length > 0) {
+              this.posts.forEach(element => {
+                element.date = moment(element.date).format('YYYY-MM-DD hh:mm:ss');
+              });
+            }
+        },
+        error => {
+            // this.alertService.error(error.error.message);
+            // this.loading = false;
+        });
     this.messageService.getMessages()
     .pipe(first())
     .subscribe(

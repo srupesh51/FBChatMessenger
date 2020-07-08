@@ -27,4 +27,7 @@ export class HeaderComponent implements OnInit {
   sendMessage() {
     this.router.navigate(['/sender']);
   }
+  createPost() {
+    this.router.navigate(['/create-post']);
+  }
 }

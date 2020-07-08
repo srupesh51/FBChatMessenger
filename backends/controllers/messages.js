@@ -19,8 +19,8 @@ exports.createMessage = (req,res,next) => {
 
 exports.readMessages = (req,res,next) => {
   Message.find({}).sort({date: -1 }).then((msgDocs) => {
-      let msgData = _.filter(msgDocs, (msg) => {
-          return parseInt(msg.user_id) === parseInt(req.body.user_id);
+      const msgData = _.filter(msgDocs, (msg) => {
+          return parseInt(msg.user_id) === parseInt(req.params.id);
       });
       res.status(200).json({
           message: 'Messages successfully fetched!',

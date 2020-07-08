@@ -36,6 +36,8 @@ const messageRoutes = require('./routes/messages');
 app.use('/api/messages', messageRoutes);
 const userRoutes = require('./routes/users');
 app.use('/api/users', userRoutes);
+const postRoutes = require('./routes/posts');
+app.use('/api/posts', postRoutes);
 http.listen(PORT, () => {
     console.log("Server is running on Port: " + PORT);
 });
