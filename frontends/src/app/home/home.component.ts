@@ -76,12 +76,14 @@ export class HomeComponent implements OnInit {
             // this.loading = false;
         });
     this.socket.on('MSG_RECV', (msg) => {
-          console.log(msg, msg.user_id, localStorage.getItem('userId'),
-          msg.user_id === parseInt(localStorage.getItem('userId')));
         if(msg.user_id === parseInt(localStorage.getItem('userId'))) {
           msg.date = moment().format('YYYY-MM-DD hh:mm:ss');
           this.messages.unshift(msg);
         }
+    });
+    this.socket.on('POST_RECV', (post) => {
+      post.date = moment().format('YYYY-MM-DD hh:mm:ss');
+      this.posts.unshift(post);
     });
     this.userService.getUser(localStorage.getItem('userEmail'))
     .pipe(first())

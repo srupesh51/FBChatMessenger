@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../services/alert.service';
+import { SocketioService } from '../services/socketio.service';
 import { PostService } from '../services/post.service';
 @Component({
   selector: 'app-post',
@@ -13,14 +14,16 @@ export class PostComponent implements OnInit {
   postForm: FormGroup;
   loading = false;
   submitted = false;
+  socket;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private postService: PostService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private socketService: SocketioService
   ) {
-
+      this.socket = socketService.getSocketConnection();
     }
 
   ngOnInit(): void {
@@ -46,6 +49,7 @@ export class PostComponent implements OnInit {
       .pipe(first())
       .subscribe(
           data => {
+              this.socket.emit('POST_SENT', this.postForm.value);
               this.router.navigate(['/']);
           },
           error => {

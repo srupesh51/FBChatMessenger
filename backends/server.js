@@ -53,6 +53,9 @@ io.on('connection', (socket) => {
   socket.on('MSG_SENT', (msgObject) => {
     io.emit('MSG_RECV', msgObject);
   });
+  socket.on('POST_SENT', (postObject) => {
+    io.emit('POST_RECV', postObject);
+  });
   socket.on('USER_CONNECTED', (user) => {
     let flag = false;
     if(users !== undefined && users.length > 0) {
